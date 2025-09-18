@@ -9,10 +9,9 @@ import { Zap, TrendingUp, Users, BookOpen } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 // Mock data for demo - in production this would come from APIs
-const ASSETS = [
-  { name: "Tesla (TSLA)", currentPrice: 248.50 },
-  { name: "Ethereum (ETH)", currentPrice: 3420.75 },
-  { name: "Bitcoin (BTC)", currentPrice: 67891.20 },
+const MAIN_ASSETS = [
+  { id: "tesla", name: "Tesla (TSLA)", currentPrice: 248.50, emoji: "🚗" },
+  { id: "ethereum", name: "Ethereum (ETH)", currentPrice: 3420.75, emoji: "💎" },
 ];
 
 const Index = () => {
@@ -21,9 +20,9 @@ const Index = () => {
     streak: 3,
     correctPredictions: 8,
     totalPredictions: 12,
-    currentAssetIndex: 0,
     timeLeft: 120, // 2 minutes for demo
     isGameActive: true,
+    predictions: {} as Record<string, 'up' | 'down' | null>,
   });
 
   const [showResult, setShowResult] = useState(false);
@@ -53,30 +52,37 @@ const Index = () => {
     setTimeout(() => {
       setGameState(prev => ({
         ...prev,
-        currentAssetIndex: (prev.currentAssetIndex + 1) % ASSETS.length,
         timeLeft: 120,
         isGameActive: true,
+        predictions: {},
       }));
     }, 2000);
   };
 
-  const handlePredict = (prediction: 'up' | 'down') => {
-    const currentAsset = ASSETS[gameState.currentAssetIndex];
+  const handlePredict = (assetId: string, prediction: 'up' | 'down') => {
+    const asset = MAIN_ASSETS.find(a => a.id === assetId);
+    if (!asset) return;
+    
+    // Update predictions state
+    setGameState(prev => ({
+      ...prev,
+      predictions: { ...prev.predictions, [assetId]: prediction }
+    }));
     
     // Simulate price movement and result (in production, this would be real data)
     const priceChange = (Math.random() - 0.5) * 0.1; // Random ±5% change
-    const newPrice = currentAsset.currentPrice * (1 + priceChange);
-    const actualDirection = newPrice > currentAsset.currentPrice ? 'up' : 'down';
+    const newPrice = asset.currentPrice * (1 + priceChange);
+    const actualDirection = newPrice > asset.currentPrice ? 'up' : 'down';
     const isCorrect = prediction === actualDirection;
     
     const pointsEarned = isCorrect ? 150 : 50; // More points for correct predictions
     
     const result = {
-      asset: currentAsset.name,
+      asset: asset.name,
       prediction,
       actualDirection,
       isCorrect,
-      startPrice: currentAsset.currentPrice,
+      startPrice: asset.currentPrice,
       endPrice: newPrice,
       pointsEarned,
     };
@@ -88,7 +94,6 @@ const Index = () => {
       streak: isCorrect ? prev.streak + 1 : 0,
       correctPredictions: prev.correctPredictions + (isCorrect ? 1 : 0),
       totalPredictions: prev.totalPredictions + 1,
-      isGameActive: false,
     }));
 
     setLastResult(result);
@@ -99,8 +104,8 @@ const Index = () => {
     }, 1500);
 
     toast({
-      title: "Prediction Submitted! 🎯",
-      description: `You predicted ${currentAsset.name} will go ${prediction.toUpperCase()}. Settlement in progress...`,
+      title: `${asset.emoji} Prediction Submitted!`,
+      description: `You predicted ${asset.name} will go ${prediction.toUpperCase()}. Settlement in progress...`,
     });
   };
 
@@ -111,35 +116,33 @@ const Index = () => {
     // Start next round
     setGameState(prev => ({
       ...prev,
-      currentAssetIndex: (prev.currentAssetIndex + 1) % ASSETS.length,
       timeLeft: 120,
       isGameActive: true,
+      predictions: {},
     }));
   };
-
-  const currentAsset = ASSETS[gameState.currentAssetIndex];
 
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-border/50 bg-card/50 backdrop-blur-sm">
+      <header className="border-b border-border/50 bg-card/80 backdrop-blur-sm shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl gradient-hero flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl gradient-hero flex items-center justify-center shadow-lg">
                 <Zap className="w-6 h-6 text-white" />
               </div>
               <div>
                 <h1 className="text-xl font-bold gradient-hero bg-clip-text text-transparent">
                   Money Lab Demo
                 </h1>
-                <p className="text-xs text-muted-foreground">Learn investing through prediction games</p>
+                <p className="text-xs text-muted-foreground">Learn investing through prediction games 🎓</p>
               </div>
             </div>
             
             <Badge variant="outline" className="bg-accent/10 text-accent border-accent/20">
               <Users className="w-3 h-3 mr-1" />
-              Demo Mode
+              Student Mode
             </Badge>
           </div>
         </div>
@@ -154,15 +157,20 @@ const Index = () => {
           totalPredictions={gameState.totalPredictions}
         />
 
-        {/* Main Prediction Game */}
-        <div className="max-w-md mx-auto">
-          <PredictionCard
-            asset={currentAsset.name}
-            currentPrice={currentAsset.currentPrice}
-            timeLeft={gameState.timeLeft}
-            onPredict={handlePredict}
-            isActive={gameState.isGameActive}
-          />
+        {/* Dual Prediction Cards */}
+        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {MAIN_ASSETS.map((asset) => (
+            <div key={asset.id} className="relative">
+              <PredictionCard
+                asset={`${asset.emoji} ${asset.name}`}
+                currentPrice={asset.currentPrice}
+                timeLeft={gameState.timeLeft}
+                onPredict={(prediction) => handlePredict(asset.id, prediction)}
+                isActive={gameState.isGameActive && !gameState.predictions[asset.id]}
+                prediction={gameState.predictions[asset.id]}
+              />
+            </div>
+          ))}
         </div>
 
         {/* Educational Panel */}

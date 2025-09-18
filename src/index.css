@@ -6,34 +6,34 @@
 
 @layer base {
   :root {
-    /* Core backgrounds - Dark theme for financial app feel */
-    --background: 240 10% 6%;
-    --foreground: 0 0% 98%;
+    /* Core backgrounds - Light, bright theme for young users */
+    --background: 220 30% 97%;
+    --foreground: 240 10% 15%;
 
-    /* Card system - Elevated surfaces */
-    --card: 240 8% 12%;
-    --card-foreground: 0 0% 95%;
+    /* Card system - Clean white surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 15%;
 
     /* Popover system */
-    --popover: 240 8% 12%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 15%;
 
     /* Primary - Web3 gradient purple-blue */
     --primary: 258 90% 66%;
     --primary-foreground: 0 0% 100%;
     --primary-glow: 270 100% 75%;
 
-    /* Secondary - Muted purple */
-    --secondary: 240 8% 18%;
-    --secondary-foreground: 0 0% 90%;
+    /* Secondary - Light purple */
+    --secondary: 240 20% 92%;
+    --secondary-foreground: 240 10% 20%;
 
     /* Muted tones */
-    --muted: 240 6% 20%;
-    --muted-foreground: 240 5% 65%;
+    --muted: 240 10% 88%;
+    --muted-foreground: 240 5% 55%;
 
-    /* Accent - Vibrant cyan for highlights */
-    --accent: 195 100% 60%;
-    --accent-foreground: 240 10% 6%;
+    /* Accent - Bright cyan for highlights */
+    --accent: 195 100% 50%;
+    --accent-foreground: 0 0% 100%;
 
     /* Success - Green for wins/profits */
     --success: 142 72% 29%;
@@ -49,8 +49,8 @@
     --warning-foreground: 0 0% 100%;
 
     /* Borders and inputs */
-    --border: 240 6% 20%;
-    --input: 240 6% 16%;
+    --border: 240 10% 85%;
+    --input: 240 10% 95%;
     --ring: 258 90% 66%;
 
     --radius: 0.75rem;
@@ -59,7 +59,7 @@
     --gradient-primary: linear-gradient(135deg, hsl(258 90% 66%), hsl(270 100% 75%));
     --gradient-success: linear-gradient(135deg, hsl(142 72% 29%), hsl(142 72% 45%));
     --gradient-warning: linear-gradient(135deg, hsl(25 95% 53%), hsl(35 95% 60%));
-    --gradient-card: linear-gradient(135deg, hsl(240 8% 12%), hsl(240 6% 14%));
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(240 20% 98%));
     --gradient-hero: linear-gradient(135deg, hsl(258 90% 66%) 0%, hsl(195 100% 60%) 100%);
 
     /* Shadows with glow effects */

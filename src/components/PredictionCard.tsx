@@ -10,6 +10,7 @@ interface PredictionCardProps {
   timeLeft: number;
   onPredict: (prediction: 'up' | 'down') => void;
   isActive: boolean;
+  prediction?: 'up' | 'down' | null;
 }
 
 export const PredictionCard = ({ 
@@ -17,9 +18,11 @@ export const PredictionCard = ({
   currentPrice, 
   timeLeft, 
   onPredict, 
-  isActive 
+  isActive,
+  prediction: externalPrediction 
 }: PredictionCardProps) => {
-  const [prediction, setPrediction] = useState<'up' | 'down' | null>(null);
+  const [localPrediction, setLocalPrediction] = useState<'up' | 'down' | null>(null);
+  const prediction = externalPrediction || localPrediction;
   
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -29,12 +32,12 @@ export const PredictionCard = ({
 
   const handlePredict = (direction: 'up' | 'down') => {
     if (!isActive) return;
-    setPrediction(direction);
+    setLocalPrediction(direction);
     onPredict(direction);
   };
 
   return (
-    <Card className="p-6 gradient-card border-border/50 transition-smooth hover:shadow-glow">
+    <Card className="p-6 gradient-card border-border/30 transition-smooth hover:shadow-lg hover:shadow-primary/10 bg-card/90 backdrop-blur-sm">
       <div className="space-y-4">
         {/* Header */}
         <div className="flex items-center justify-between">
