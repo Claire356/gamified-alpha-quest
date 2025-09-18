@@ -2,41 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Money Lab Demo Design System - Gamified Web3 Learning Platform */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core backgrounds - Dark theme for financial app feel */
+    --background: 240 10% 6%;
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Card system - Elevated surfaces */
+    --card: 240 8% 12%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* Popover system */
+    --popover: 240 8% 12%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary - Web3 gradient purple-blue */
+    --primary: 258 90% 66%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 270 100% 75%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary - Muted purple */
+    --secondary: 240 8% 18%;
+    --secondary-foreground: 0 0% 90%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted tones */
+    --muted: 240 6% 20%;
+    --muted-foreground: 240 5% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent - Vibrant cyan for highlights */
+    --accent: 195 100% 60%;
+    --accent-foreground: 240 10% 6%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Success - Green for wins/profits */
+    --success: 142 72% 29%;
+    --success-foreground: 0 0% 100%;
+    --success-glow: 142 72% 45%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Destructive - Red for losses */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
-    --radius: 0.5rem;
+    /* Warning - Orange for predictions */
+    --warning: 25 95% 53%;
+    --warning-foreground: 0 0% 100%;
+
+    /* Borders and inputs */
+    --border: 240 6% 20%;
+    --input: 240 6% 16%;
+    --ring: 258 90% 66%;
+
+    --radius: 0.75rem;
+
+    /* Custom gradients for gamification */
+    --gradient-primary: linear-gradient(135deg, hsl(258 90% 66%), hsl(270 100% 75%));
+    --gradient-success: linear-gradient(135deg, hsl(142 72% 29%), hsl(142 72% 45%));
+    --gradient-warning: linear-gradient(135deg, hsl(25 95% 53%), hsl(35 95% 60%));
+    --gradient-card: linear-gradient(135deg, hsl(240 8% 12%), hsl(240 6% 14%));
+    --gradient-hero: linear-gradient(135deg, hsl(258 90% 66%) 0%, hsl(195 100% 60%) 100%);
+
+    /* Shadows with glow effects */
+    --shadow-primary: 0 10px 30px -10px hsl(258 90% 66% / 0.3);
+    --shadow-success: 0 10px 30px -10px hsl(142 72% 29% / 0.3);
+    --shadow-glow: 0 0 40px hsl(258 90% 66% / 0.2);
+
+    /* Animation timing */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bouncy: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +134,40 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Custom utility classes for Money Lab */
+@layer utilities {
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .gradient-success {
+    background: var(--gradient-success);
+  }
+  
+  .gradient-warning {
+    background: var(--gradient-warning);
+  }
+  
+  .gradient-card {
+    background: var(--gradient-card);
+  }
+  
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  
+  .transition-bouncy {
+    transition: var(--transition-bouncy);
   }
 }
